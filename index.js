@@ -1,24 +1,18 @@
 const http = require("http");
 const brain = require("brain.js");
 
-// Create a new instance of a neural network
 const network = new brain.NeuralNetwork();
 
-// Function to classify RGB colors as light or dark
 const classifyColor = (r, g, b) => {
-  // Normalize RGB values
   r = r / 255;
   g = g / 255;
   b = b / 255;
 
-  // Calculate luminance
   const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
-  // Return 1 for light, 0 for dark
   return luminance > 0.5 ? 1 : 0;
 };
 
-// Training data: RGB values and corresponding classification
 const trainingData = [
   // Dark Colors
   { input: [0.1, 0.2, 0.3], output: [0] }, // Dark
@@ -47,24 +41,20 @@ const trainingData = [
   { input: [0.5, 0.7, 0.5], output: [1] }, // Medium Light Green
 ];
 
-// Training configuration
 const config = {
   log: true,
   logPeriod: 1,
   errorThresh: 0.02,
-  iterations: 200, // Increased iterations for better training
+  iterations: 200,
   learningRate: 0.01,
 };
 
-// Train the neural network
 network.train(trainingData, config);
 
-// Test data: RGB values to classify
-const testColor = [4 / 255, 4 / 255, 3 / 255]; // Corrected RGB color
+const testColor = [4 / 255, 4 / 255, 3 / 255];
 
 const result = network.run(testColor);
 
-// Classify result: 0 = dark, 1 = light
 const classification = result > 0.5 ? "Light" : "Dark";
 
 console.log(
@@ -73,7 +63,6 @@ console.log(
   }) is classified as: ${classification}`
 );
 
-// Creating a server
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/plain");

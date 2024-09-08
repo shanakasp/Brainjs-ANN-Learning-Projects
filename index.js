@@ -51,7 +51,7 @@ const config = {
 
 network.train(trainingData, config);
 
-const testColor = [4 / 255, 4 / 255, 3 / 255];
+const testColor = [0 / 255, 13 / 255, 9 / 255];
 
 const result = network.run(testColor);
 
